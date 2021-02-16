@@ -20,6 +20,7 @@ diceEl.classList.add('hidden');
 const scores = [0,0];
 let currentScore = 0;
 let activePlayer = 0;
+let playing = true;
 
 
 const switchPlayer = function(){
@@ -31,7 +32,7 @@ const switchPlayer = function(){
 }
 
 btnRoll.addEventListener('click',function(){
-
+if(playing){
     const dice = Math.trunc(Math.random() * 6) + 1;
     // console.log(dice);
 
@@ -48,21 +49,28 @@ btnRoll.addEventListener('click',function(){
 
     }
 
+}
+    
 
 });
 
 btnHold.addEventListener('click',function(){
 
+    if(playing){
+
     scores [activePlayer] += currentScore;
 
     document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
     if(scores[activePlayer] >= 20){
+        playing = false;
+        diceEl.classList.add('hidden');
+
         document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
         document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
     }else{
         switchPlayer();
     }
 
-  
+}
 
 });
